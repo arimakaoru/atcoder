@@ -1,27 +1,21 @@
 # TLE
+import sys
 
-N, M = map(int, input().split())
-A = [0] * N
-B = [0] * N
+N, M = map(int, sys.stdin.readline().split())
+AB = [None] * N
 for i in range(N):
-    A[i], B[i] = map(int, input().split())
+    AB[i] = list(map(int, sys.stdin.readline().split()))
 
+AB.sort()
 cnt = 0
 ans = 0
-while cnt < M:
-    min_cost = min(A)
-    min_index = A.index(min_cost)
-    amount = B[min_index]
-    if cnt + amount < M:
-        ans += min_cost * amount
-        cnt += amount
-    elif cnt + amount == M:
-        ans += min_cost * amount
-        break
+
+for a,b in AB:
+    if cnt + b < M:
+        ans += a * b
+        cnt += b
     else:
-        ans += min_cost * (M - cnt)
+        ans += a * (M - cnt) 
         break
-    A = [A[i] for i in range(len(A)) if i != min_index]
-    B = [B[i] for i in range(len(B)) if i != min_index]
-    
+
 print(ans)
